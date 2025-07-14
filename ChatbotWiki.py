@@ -1,6 +1,10 @@
 import streamlit as st
 import wikipedia
 
+# Initialize session state for recent queries
+if "queries" not in st.session_state:
+    st.session_state.queries = []
+
 # Page config
 st.set_page_config(page_title="Chatbot-Wiki", page_icon="📚", layout="centered")
 
@@ -21,15 +25,29 @@ if menu == "Home":
                 summary = wikipedia.summary(user_input, sentences=3)
                 st.success("✅ Answer:")
                 st.write(summary)
+
+                # Save query in session state
+                if user_input not in st.session_state.queries:
+                    st.session_state.queries.insert(0, user_input)
+                    # Keep only last 5 queries
+                    st.session_state.queries = st.session_state.queries[:5]
+
             except wikipedia.exceptions.DisambiguationError as e:
                 st.warning("⚠️ Your query is ambiguous. Please be more specific.")
-                st.write(e.options[:5])  # show top 5 suggestions
+                st.write(e.options[:5])
             except wikipedia.exceptions.PageError:
                 st.error("❌ No page found for your query.")
             except Exception as e:
                 st.error(f"An error occurred: {str(e)}")
         else:
             st.info("Please enter a query to get started.")
+
+    # --- Show latest queries below result ---
+    if st.session_state.queries:
+        st.markdown("---")
+        st.subheader("🕘 Latest Queries")
+        for idx, q in enumerate(st.session_state.queries, 1):
+            st.markdown(f"{idx}. **{q}**")
 
 # --- About Section ---
 elif menu == "About":
@@ -51,4 +69,3 @@ elif menu == "Contact Us":
     - 🌐 Website: [chatbotwiki.com](https://chatbotwiki.com)
     - 🐦 Twitter: [@chatbotwiki](https://twitter.com/chatbotwiki)
     """)
-

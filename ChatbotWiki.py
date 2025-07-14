@@ -14,7 +14,8 @@ if menu == "Home":
     st.subheader("Ask me anything, and I'll try to get the answer from Wikipedia!")
 
     user_input = st.text_input("🔍 Enter your query:")
-
+    if "queries" not in st.session_state:
+       st.session_state["queries"] = []
     if st.button("Get Answer"):
         if user_input:
             try:

@@ -21,6 +21,11 @@ if menu == "Home":
                 summary = wikipedia.summary(user_input, sentences=3)
                 st.success("✅ Answer:")
                 st.write(summary)
+                # Save query in session state
+                if user_input not in st.session_state.queries:
+                    st.session_state.queries.insert(0, user_input)
+                    # Keep only last 5 queries
+                    st.session_state.queries = st.session_state.queries[:5]
             except wikipedia.exceptions.DisambiguationError as e:
                 st.warning("⚠️ Your query is ambiguous. Please be more specific.")
                 st.write(e.options[:5])  # show top 5 suggestions

@@ -37,20 +37,10 @@ if st.session_state["queries"]:
                 summary = wikipedia.summary(user_input, sentences=3)
                 st.success("✅ Answer:")
                 st.write(summary)
-<<<<<<< HEAD
-
                 # Save query
                 if user_input not in st.session_state["queries"]:
                     st.session_state["queries"].insert(0, user_input)
                     st.session_state["queries"] = st.session_state["queries"][:5]
-
-=======
-                # Save query in session state
-                if user_input not in st.session_state.queries:
-                    st.session_state.queries.insert(0, user_input)
-                    # Keep only last 5 queries
-                    st.session_state.queries = st.session_state.queries[:5]
->>>>>>> f0078a94ce092c881bcc655e1c314e4fe06740c0
             except wikipedia.exceptions.DisambiguationError as e:
                 st.warning("⚠️ Your query is ambiguous. Please be more specific.")
                 st.write(e.options[:5])

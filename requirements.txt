@@ -3,4 +3,3 @@ wikipedia
 pyrebase4
 pyrebase
 setuptools
-pkg_resources

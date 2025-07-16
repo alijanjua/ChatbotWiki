@@ -1,6 +1,12 @@
 import streamlit as st
 import wikipedia
 
+if "queries" not in st.session_state:
+    st.session_state["queries"] = []
+
+# Page config
+st.set_page_config(page_title="Chatbot-Wiki", page_icon="📚", layout="centered")
+
 # Sidebar navigation
 st.sidebar.title("Navigation")
 menu = st.sidebar.radio("Go to", ["Home", "About", "Contact Us"])

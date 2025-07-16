@@ -2,4 +2,4 @@ streamlit>=1.20.0
 wikipedia
 pyrebase4
 pyrebase
-pkg_resources
+setuptools
